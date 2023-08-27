@@ -134,7 +134,9 @@ public class EmployeeController {
         }
         document.add(new Paragraph("Nom : " + employee.getFirstName() + " " + employee.getLastName()));
         document.add(new Paragraph("Age : " + employee.getDateOfBirth()));
-
+        document.add(new Paragraph("Date d'embauche : " + employee.getHireDate()));
+        document.add(new Paragraph("Date de départ : " + employee.getDepartureDate()));
+        document.add(new Paragraph("Numéro CNAPS : " + employee.getCnapsNumber()));
         document.close();
     }
 
