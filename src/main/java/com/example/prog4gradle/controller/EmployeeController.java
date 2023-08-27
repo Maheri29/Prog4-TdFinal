@@ -18,6 +18,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Base64;
 import java.util.List;
 import java.io.IOException;
@@ -133,7 +134,9 @@ public class EmployeeController {
             document.add(image);
         }
         document.add(new Paragraph("Nom : " + employee.getFirstName() + " " + employee.getLastName()));
-        document.add(new Paragraph("Age : " + employee.getDateOfBirth()));
+        LocalDate birthDate = employee.getDateOfBirth();
+        int age = Period.between(birthDate, LocalDate.now()).getYears();
+        document.add(new Paragraph("Âge : " + age + " ans"));
         document.add(new Paragraph("Date d'embauche : " + employee.getHireDate()));
         document.add(new Paragraph("Date de départ : " + employee.getDepartureDate()));
         document.add(new Paragraph("Numéro CNAPS : " + employee.getCnapsNumber()));
