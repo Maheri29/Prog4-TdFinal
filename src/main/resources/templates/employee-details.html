@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Détails de l'employé</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .employee-image {
+      width: 200px; /* Ajustez la largeur souhaitée pour la taille moyenne */
+      height: auto; /* La hauteur sera ajustée automatiquement pour conserver les proportions de l'image */
+      display: block; /* Assurez-vous que l'image est affichée en tant que bloc */
+      margin: 0 auto; /* Centrez l'image horizontalement */
+    }
+    .card {
+      margin-top: 20px;
+      max-width: 500px; /* Définir la largeur maximale de la carte */
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+      border: 1px solid #ccc; /* Ajouter une bordure à la carte */
+    }
+    .card-text {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+<h1 class="text-center">Détails de l'employé</h1>
+<div class="container">
+  <div class="card">
+    <div class="text-center">
+      <img class="employee-image" src="data:image/png;base64," th:attrappend="src=${employee.image}" alt="Photo de l'employé">
+    </div>
+    <div class="card-body">
+      <p class="card-text"><strong>Prénom :</strong> <span th:text="${employee.firstName}"></span></p>
+      <p class="card-text"><strong>Nom :</strong> <span th:text="${employee.lastName}"></span></p>
+      <p class="card-text"><strong>Date de naissance :</strong> <span th:text="${employee.dateOfBirth}"></span></p>
+      <p class="card-text"><strong>Sexe :</strong> <span th:text="${employee.sex}"></span></p>
+      <p class="card-text"><strong>Téléphones :</strong> <span th:text="${employee.phones}"></span></p>
+      <p class="card-text"><strong>Adresse :</strong> <span th:text="${employee.address}"></span></p>
+      <p class="card-text"><strong>Email perso :</strong> <span th:text="${employee.personalEmail}"></span></p>
+      <p class="card-text"><strong>Email pro :</strong> <span th:text="${employee.professionalEmail}"></span></p>
+      <p class="card-text"><strong>Numéro CIN :</strong> <span th:text="${employee.cinNumber}"></span></p>
+      <p class="card-text"><strong>Date de délivrance du CIN :</strong> <span th:text="${employee.cinDeliveryDate}"></span></p>
+      <p class="card-text"><strong>Lieu de délivrance du CIN :</strong> <span th:text="${employee.cinDeliveryPlace}"></span></p>
+      <p class="card-text"><strong>Fonction :</strong> <span th:text="${employee.jobTitle}"></span></p>
+      <p class="card-text"><strong>Enfants à charge :</strong> <span th:text="${employee.numberOfChildren}"></span></p>
+      <p class="card-text"><strong>Date d'embauche :</strong> <span th:text="${employee.hireDate}"></span></p>
+      <p class="card-text"><strong>Date de départ :</strong> <span th:text="${employee.departureDate}"></span></p>
+      <p class="card-text"><strong>Catégorie socio-professionnelle :</strong> <span th:text="${employee.socioProfessionalCategory}"></span></p>
+      <p class="card-text"><strong>Numéro CNAPS :</strong> <span th:text="${employee.cnapsNumber}"></span></p>
+    </div>
+  </div>
+</div>
+<div class="container text-center">
+  <!-- employee-details.html -->
+  <!-- ... autres éléments ... -->
+  <a th:href="@{/generate-pdf/{id}(id=${employee.id})}" class="btn btn-primary">Générer PDF</a>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des employés</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+<div class="container mt-4">
+    <h2 class="mb-3">Filtrer les employés :</h2>
+    <form action="/employees" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="firstName">Prénom :</label>
+                <input type="text" class="form-control" id="firstName" name="firstName">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="lastName">Nom :</label>
+                <input type="text" class="form-control" id="lastName" name="lastName">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="sex">Sexe :</label>
+                <select class="form-control" id="sex" name="sex">
+                    <option value="">Tous</option>
+                    <option value="H">Homme</option>
+                    <option value="F">Femme</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="jobTitle">Fonction :</label>
+                <input type="text" class="form-control" id="jobTitle" name="jobTitle">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="hireDateFrom">Date d'embauche de :</label>
+                <input type="date" class="form-control" id="hireDateFrom" name="hireDateFrom">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="hireDateTo">Date d'embauche jusqu'à :</label>
+                <input type="date" class="form-control" id="hireDateTo" name="hireDateTo">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="departureDateFrom">Date de départ de :</label>
+                <input type="date" class="form-control" id="departureDateFrom" name="departureDateFrom">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="departureDateTo">Date de départ jusqu'à :</label>
+                <input type="date" class="form-control" id="departureDateTo" name="departureDateTo">
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+            <a href="/employees" class="btn btn-secondary">Effacer les filtres</a>
+        </div>
+    </form>
+</div>
+    <h1 class="text-center mt-4 mb-4">Liste des employés</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th><a th:href="@{/employees(sortField='firstName', sortOrder=${sortField eq 'firstName' and sortOrder eq 'asc' ? 'desc' : 'asc'})}">Prénom</a></th>
+                <th><a th:href="@{/employees(sortField='lastName', sortOrder=${sortField eq 'lastName' and sortOrder eq 'asc' ? 'desc' : 'asc'})}">Nom</a></th>
+                <th><a th:href="@{/employees(sortField='dateOfBirth', sortOrder=${sortField eq 'dateOfBirth' and sortOrder eq 'asc' ? 'desc' : 'asc'})}">Date de naissance</a></th>
+                <th><a th:href="@{/employees(sortField='sex', sortOrder=${sortField eq 'sex' and sortOrder eq 'asc' ? 'desc' : 'asc'})}">Sexe</a></th>
+                <th>Téléphones</th>
+                <th>Adresse</th>
+                <th>Email perso</th>
+                <th>Email pro</th>
+                <th>Numéro CIN</th>
+                <th>Date de délivrance du CIN</th>
+                <th>Lieu de délivrance du CIN</th>
+                <th>Fonction</th>
+                <th>Enfants à charge</th>
+                <th>Date d'embauche</th>
+                <th>Date de départ</th>
+                <th>Catégorie socio-professionnelle</th>
+                <th>Numéro CNAPS</th>
+                <th></th> <!-- Colonne pour le lien vers la fiche employé -->
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Boucle sur la liste des employés -->
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.firstName}"></td>
+                <td th:text="${employee.lastName}"></td>
+                <td th:text="${employee.dateOfBirth}"></td>
+                <td th:text="${employee.sex}"></td>
+                <td th:text="${employee.phones}"></td>
+                <td th:text="${employee.address}"></td>
+                <td th:text="${employee.personalEmail}"></td>FDX
+                <td th:text="${employee.professionalEmail}"></td>
+                <td th:text="${employee.cinNumber}"></td>
+                <td th:text="${employee.cinDeliveryDate}"></td>
+                <td th:text="${employee.cinDeliveryPlace}"></td>
+                <td th:text="${employee.jobTitle}"></td>
+                <td th:text="${employee.numberOfChildren}"></td>
+                <td th:text="${employee.hireDate}"></td>
+                <td th:text="${employee.departureDate}"></td>
+                <td th:text="${employee.socioProfessionalCategory}"></td>
+                <td th:text="${employee.cnapsNumber}"></td>
+                <td>
+                    <a class="btn btn-primary" th:href="@{/employee/{id}(id=${employee.id})}">Voir la fiche</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <!-- Use Thymeleaf URL encoding and parameter replacement -->
+            <a th:href="@{/export-employees(firstName=${param.firstName}, lastName=${param.lastName}, sex=${param.sex}, jobTitle=${param.jobTitle}, hireDateFrom=${param.hireDateFrom}, hireDateTo=${param.hireDateTo}, departureDateFrom=${param.departureDateFrom}, departureDateTo=${param.departureDateTo}, sortField=${param.sortField}, sortOrder=${param.sortOrder})}" class="btn btn-success">Exporter au format CSV</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

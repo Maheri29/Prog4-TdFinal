@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un employé</title>
+    <!-- Ajouter les liens CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-4">Ajouter un employé</h1>
+    <form action="/add-employee" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="firstName">Prénom :</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Nom :</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateOfBirth">Date de naissance :</label>
+                    <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+                </div>
+                <div class="form-group">
+                    <label for="sex">Sexe :</label>
+                    <select class="form-control" id="sex" name="sex" required>
+                        <option value="H">Homme</option>
+                        <option value="F">Femme</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phones">Téléphones :</label>
+                    <input type="text" class="form-control" id="phones" name="phones" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresse exacte :</label>
+                    <input type="text" class="form-control" id="address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="personalEmail">Email perso :</label>
+                    <input type="email" class="form-control" id="personalEmail" name="personalEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="professionalEmail">Email pro :</label>
+                    <input type="email" class="form-control" id="professionalEmail" name="professionalEmail" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="cinNumber">Numéro CIN :</label>
+                    <input type="text" class="form-control" id="cinNumber" name="cinNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="cinDeliveryDate">Date de délivrance du CIN :</label>
+                    <input type="date" class="form-control" id="cinDeliveryDate" name="cinDeliveryDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="cinDeliveryPlace">Lieu de délivrance du CIN :</label>
+                    <input type="text" class="form-control" id="cinDeliveryPlace" name="cinDeliveryPlace" required>
+                </div>
+                <div class="form-group">
+                    <label for="jobTitle">Fonction au sein de l'entreprise :</label>
+                    <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="numberOfChildren">Nombre d'enfants à charge :</label>
+                    <input type="number" class="form-control" id="numberOfChildren" name="numberOfChildren" required>
+                </div>
+                <div class="form-group">
+                    <label for="hireDate">Date d'embauche :</label>
+                    <input type="date" class="form-control" id="hireDate" name="hireDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="departureDate">Date de départ :</label>
+                    <input type="date" class="form-control" id="departureDate" name="departureDate">
+                </div>
+                <div class="form-group">
+                    <label for="socioProfessionalCategory">Catégorie socio-professionnelle :</label>
+                    <select class="form-control" id="socioProfessionalCategory" name="socioProfessionalCategory" required>
+                        <option value="Agriculteurs exploitants">Agriculteurs exploitants</option>
+                        <option value="Artisans">Artisans, commerçants et chefs d'entreprise</option>
+                        <option value="Professions intellectuelles">Cadres et professions intellectuelles supérieures</option>
+                        <option value="Professions intermédiaires">Professions intermédiaires</option>
+                        <option value="Employés">Employés</option>
+                        <option value="Ouvriers">Ouvriers</option>
+                        <option value="Retraités">Retraités</option>
+                        <option value="Autres personnes sans activité professionnelle">Autres personnes sans activité professionnelle</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cnapsNumber">Numéro CNAPS :</label>
+                    <input type="text" class="form-control" id="cnapsNumber" name="cnapsNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Photo d'identité :</label>
+                    <input type="file" class="form-control-file" id="photo" name="photo">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </div>
+    </form>
+</div>
+
+<!-- Ajouter le script JavaScript de Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
