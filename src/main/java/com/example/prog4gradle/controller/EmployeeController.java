@@ -2,6 +2,7 @@ package com.example.prog4gradle.controller;
 
 import com.example.prog4gradle.model.Employee;
 import com.example.prog4gradle.service.EmployeeService;
+import com.itextpdf.text.Image;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
@@ -17,6 +18,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 import java.io.IOException;
 
@@ -124,9 +126,14 @@ public class EmployeeController {
 
         document.open();
         document.add(new Paragraph("Fiche Employé"));
+        if (employee.getImage() != null && !employee.getImage().isEmpty()) {
+            byte[] imageBytes = Base64.getDecoder().decode(employee.getImage());
+            Image image = Image.getInstance(imageBytes);
+            image.scaleToFit(100, 100); // Ajuste la taille de l'image selon tes besoins
+            document.add(image);
+        }
         document.add(new Paragraph("Nom : " + employee.getFirstName() + " " + employee.getLastName()));
         document.add(new Paragraph("Age : " + employee.getDateOfBirth()));
-
 
         document.close();
     }
