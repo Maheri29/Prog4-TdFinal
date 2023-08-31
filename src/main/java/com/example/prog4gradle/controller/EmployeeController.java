@@ -2,7 +2,9 @@ package com.example.prog4gradle.controller;
 
 import com.example.prog4gradle.model.Employee;
 import com.example.prog4gradle.service.EmployeeService;
-import com.itextpdf.text.Image;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
@@ -11,12 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Base64;
@@ -48,14 +48,18 @@ public class EmployeeController {
     @GetMapping("/add-employee")
     public String showAddEmployeeForm(Model model) {
         model.addAttribute("employee", new Employee());
-        return "add-employee"; // Nom du template Thymeleaf pour afficher le formulaire d'ajout d'employé
+        return "add-employee";
     }
 
     @PostMapping("/add-employee")
     public String addEmployee(@ModelAttribute("employee") Employee employeeModel) {
+        // ...
+
+        // Enregistrer l'employé dans le service
         employeeService.addEmployee(employeeModel);
         return "redirect:/employees";
     }
+
 
     @GetMapping("/employee/{id}")
     public String getEmployeeDetails(@PathVariable("id") Long id, Model model) {
@@ -126,22 +130,51 @@ public class EmployeeController {
         PdfWriter.getInstance(document, response.getOutputStream());
 
         document.open();
-        document.add(new Paragraph("Fiche Employé"));
+
+
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        table.setWidths(new int[]{2, 5});
+
+
         if (employee.getImage() != null && !employee.getImage().isEmpty()) {
             byte[] imageBytes = Base64.getDecoder().decode(employee.getImage());
             Image image = Image.getInstance(imageBytes);
-            image.scaleToFit(100, 100); // Ajuste la taille de l'image selon tes besoins
-            document.add(image);
+            image.scaleToFit(100, 100);
+            PdfPCell imageCell = new PdfPCell(image, true);
+            imageCell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(imageCell);
+        } else {
+
+            PdfPCell emptyCell = new PdfPCell();
+            emptyCell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(emptyCell);
         }
-        document.add(new Paragraph("Nom : " + employee.getFirstName() + " " + employee.getLastName()));
+
+
+        PdfPCell infoCell = new PdfPCell();
+        infoCell.setBorder(Rectangle.NO_BORDER);
+        infoCell.setPaddingLeft(5 * 28.35f);
+
+
+        infoCell.addElement(new Paragraph("Fiche Employé", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
+        infoCell.addElement(new Paragraph("Nom : " + employee.getFirstName() + " " + employee.getLastName()));
         LocalDate birthDate = employee.getDateOfBirth();
         int age = Period.between(birthDate, LocalDate.now()).getYears();
-        document.add(new Paragraph("Âge : " + age + " ans"));
-        document.add(new Paragraph("Date d'embauche : " + employee.getHireDate()));
-        document.add(new Paragraph("Date de départ : " + employee.getDepartureDate()));
-        document.add(new Paragraph("Numéro CNAPS : " + employee.getCnapsNumber()));
+        infoCell.addElement(new Paragraph("Âge : " + age + " ans"));
+        infoCell.addElement(new Paragraph("Date d'embauche : " + employee.getHireDate()));
+        infoCell.addElement(new Paragraph("Date de départ : " + employee.getDepartureDate()));
+        infoCell.addElement(new Paragraph("Numéro CNAPS : " + employee.getCnapsNumber()));
+
+        infoCell.addElement(new Paragraph(" ")); // Ligne vide pour espacement
+        
+        infoCell.addElement(new Paragraph("information sur le salaire", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
+        infoCell.addElement(new Paragraph("Salaire brut actuel : " + employee.getCinNumber() + " Ariary par mois"));
+
+        table.addCell(infoCell);
+
+        document.add(table);
         document.close();
     }
-
     // Autres méthodes du contrôleur pour d'autres opérations liées aux employés
 }

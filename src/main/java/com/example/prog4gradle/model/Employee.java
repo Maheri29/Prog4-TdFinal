@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class Employee {
     private LocalDate cinDeliveryDate; // Date de délivrance du CIN
     private String cinDeliveryPlace; // Lieu de délivrance du CIN
     private String jobTitle; // Fonction au sein de l'entreprise
+    private Double salary; // Ajoute cette ligne avec l'import correspondant
     private int numberOfChildren; // Nombre d'enfants à charge
     private LocalDate hireDate; // Date d'embauche
     private LocalDate departureDate; // Date de départ
